@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppleHealthKit from 'rn-apple-healthkit';
+import GoogleFit from "react-native-google-fit";
 import {
   Platform,
 } from 'react-native';
@@ -28,6 +29,27 @@ if (Platform.OS === 'ios') {
 
 });
 } else {
+  GoogleFit.onAuthorize(() => {
+    console.log('AUTH SUCCESS');
+  });
+
+  GoogleFit.onAuthorizeFailure(() => {
+    console.log('AUTH ERROR');
+  });
+
+  GoogleFit.authorize();
+  const options = {
+    startDate: "2017-01-01T00:00:17.971Z", // required ISO8601Timestamp
+    endDate: new Date().toISOString() // required ISO8601Timestamp
+  };
+
+  GoogleFit.getDailyStepCountSamples(options, (err, res) => {
+    if (err) {
+      throw err;
+    }
+
+    console.log("Daily steps >>>", res);
+  });
 
 }
 
