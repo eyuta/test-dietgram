@@ -14,17 +14,20 @@ if (Platform.OS === 'ios') {
   };
   AppleHealthKit.initHealthKit(options, (err, results) => {
     if (err) {
-        console.log("error initializing Healthkit: ", err);
+        console.warn("error initializing Healthkit!!: ", err);
         return;
     }
-
+    let d = new Date(2016,1,1);
+    let options = {
+        date: d.toISOString()
+    };
     // Height Example
-    AppleHealthKit.getDateOfBirth(null, (err, results) => {
-    if (this._handleHealthkitError(err, 'getDateOfBirth')) {
-      return;
-    }
-      console.log(results)
-    });
+    AppleHealthKit.getStepCount(options, (err, results) => {
+      if (err) {
+          return;
+      }
+      console.warn(results)
+  });
 
 });
 } else {
