@@ -32,4 +32,25 @@
     - `yarn add rn-apple-healthkit` && `react-native link rn-apple-healthkit`
         []
     - `yarn add react-native-google-fit` && `react-native link react-native-google-fit`
-
+3. 実機orシミュレータで確認
+    - ios
+        - 実機
+            - xcode側のerror `signing for "dTests" requires a development team ...`
+                - teamを登録していないって言われているけど、登録済み…
+        - シミュレータ
+            - moduleが動くことは確認。ただ、データが取得できない(シミュレータ上で値を入力しても空が返る)
+    - android
+        - 実機
+            - androidの最新のSDKのバージョンが変わったため、参照するSDKをv27→v28に変更する必要がある
+            - `react-native run-android`ができないと怒られる
+                - どうやら`react-native`と`react-native-cli`がglobalに同居してるとだめみたい
+                    - 加えて、localにはreact-nativeが必要なよう
+                    - `yarn global remove react-native && yarn add react-native`
+            - `unable to load script from assets index.android.bundle`
+                - runの前にbundleする必要があるらしい[ref](https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-index-android-bundle-on-windows). ただし、なくても行ける時がある(！？)
+                    - `react-native bundle`
+                    - どうやらnodejsが使うportが塞がってると同様のエラーが出るらしい[ref](https://stackoverflow.com/questions/30216417/react-native-port-8081-already-in-use-packager-is-either-not-running-or-not-r)
+            - 動いたが、データが取れない。(認証に転んでる？)
+                - 調査中
+        - シミュレータ
+            - 未
